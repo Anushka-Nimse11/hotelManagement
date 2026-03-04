@@ -6,7 +6,7 @@ function TableBookingDetails() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/TableBookingDetails")
+      .get("https://hotel-backend-a9o4.onrender.com/TableBookingDetails")
       .then((res) => {
         const dataWithDefaultStatus = res.data.map((b) => ({
           ...b,
@@ -19,12 +19,15 @@ function TableBookingDetails() {
 
   const updateStatus = (id, status) => {
     axios
-      .put(`http://localhost:5000/updateBookingStatus/${id}`, {
-        status,
-      })
+      .put(
+        `https://hotel-backend-a9o4.onrender.com/updateBookingStatus/${id}`,
+        {
+          status,
+        },
+      )
       .then(() => {
         setBookings((prev) =>
-          prev.map((b) => (b.tId === id ? { ...b, Status: status } : b))
+          prev.map((b) => (b.tId === id ? { ...b, Status: status } : b)),
         );
       })
       .catch((err) => console.log(err));
@@ -102,8 +105,8 @@ function TableBookingDetails() {
                       item.Status === "Confirmed"
                         ? "bg-green-100 text-green-700"
                         : item.Status === "Cancelled"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
                     }`}
                       >
                         {item.Status}

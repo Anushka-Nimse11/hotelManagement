@@ -10,7 +10,7 @@ function AdminManagement() {
     if (!window.confirm("Mark this admin as inactive?")) return;
 
     axios
-      .put(`http://localhost:5000/deactivateAdmin/${id}`)
+      .put(`https://hotel-backend-a9o4.onrender.com/deactivateAdmin/${id}`)
       .then(() => fetchAdmins())
       .catch((err) => console.log(err));
   };
@@ -19,14 +19,14 @@ function AdminManagement() {
     if (!window.confirm("Reactivate this admin?")) return;
 
     axios
-      .put(`http://localhost:5000/reactivateAdmin/${id}`)
+      .put(`https://hotel-backend-a9o4.onrender.com/reactivateAdmin/${id}`)
       .then(() => fetchAdmins())
       .catch((err) => console.log(err));
   };
 
   const fetchAdmins = () => {
     axios
-      .get("http://localhost:5000/adminDetails")
+      .get("https://hotel-backend-a9o4.onrender.com/adminDetails")
       .then((res) => setAdmins(res.data))
       .catch((err) => console.log(err));
   };
@@ -107,7 +107,7 @@ function AdminManagement() {
                       <button
                         onClick={() =>
                           navigate(
-                            `/adminDashboard/updateAdmin/${admin.UserId}`
+                            `/adminDashboard/updateAdmin/${admin.UserId}`,
                           )
                         }
                         className="px-3 py-1 bg-blue-600 text-white rounded-md text-xs"

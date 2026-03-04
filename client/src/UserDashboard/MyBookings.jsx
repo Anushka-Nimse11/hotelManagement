@@ -24,7 +24,9 @@ function MyBookings() {
 
   const fetchBookings = () => {
     axios
-      .get(`http://localhost:5000/bookings?email=${userEmail}`)
+      .get(
+        `https://hotel-backend-a9o4.onrender.com/bookings?email=${userEmail}`,
+      )
       .then((res) => setBookings(res.data))
       .catch((err) => console.log(err));
   };
@@ -32,9 +34,11 @@ function MyBookings() {
   const deleteBooking = (id) => {
     if (!window.confirm("Delete this booking?")) return;
 
-    axios.delete(`http://localhost:5000/deleteBooking/${id}`).then(() => {
-      setBookings(bookings.filter((b) => b.tId !== id));
-    });
+    axios
+      .delete(`https://hotel-backend-a9o4.onrender.com/deleteBooking/${id}`)
+      .then(() => {
+        setBookings(bookings.filter((b) => b.tId !== id));
+      });
   };
 
   const startEditing = (booking) => {
@@ -111,7 +115,7 @@ function MyBookings() {
     if (!validate()) return;
 
     axios
-      .put(`http://localhost:5000/updateBooking/${id}`, {
+      .put(`https://hotel-backend-a9o4.onrender.com/updateBooking/${id}`, {
         ...formData,
         email: userEmail,
       })

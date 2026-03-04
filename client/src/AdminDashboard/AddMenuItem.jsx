@@ -20,7 +20,7 @@ function AddMenuItem() {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:5000/addMenu", menu)
+      .post("https://hotel-backend-a9o4.onrender.com/addMenu", menu)
       .then((res) => alert("Menu add successfully"))
       .catch((err) => alert(err));
 

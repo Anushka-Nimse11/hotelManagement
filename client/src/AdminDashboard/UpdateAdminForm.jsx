@@ -14,24 +14,26 @@ function UpdateAdminForm() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:5000/adminDetails").then((res) => {
-      const admin = res.data.find((a) => a.UserId == id);
-      if (admin) {
-        setReg({
-          name: admin.Name,
-          email: admin.Email,
-          address: admin.Address,
-          mobileNo: admin.MobileNo,
-        });
-      }
-    });
+    axios
+      .get("https://hotel-backend-a9o4.onrender.com/adminDetails")
+      .then((res) => {
+        const admin = res.data.find((a) => a.UserId == id);
+        if (admin) {
+          setReg({
+            name: admin.Name,
+            email: admin.Email,
+            address: admin.Address,
+            mobileNo: admin.MobileNo,
+          });
+        }
+      });
   }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .put(`http://localhost:5000/updateAdmin/${id}`, reg)
+      .put(`https://hotel-backend-a9o4.onrender.com/updateAdmin/${id}`, reg)
       .then(() => {
         alert("Admin updated successfully");
         navigate("/adminDashboard/adminManagement");
