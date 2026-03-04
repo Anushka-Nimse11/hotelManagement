@@ -1,0 +1,61 @@
+.footer {
+  background: linear-gradient(135deg, #111, #262525);
+  color: wheat;
+  padding: 40px 0 20px;
+  font-family: "Poppins", sans-serif;
+  background-position: center;   
+  background-size: cover;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 25px;
+  text-align: left;
+  padding: 0 30px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: wheat;
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  margin: 6px 0;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-sectioni {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+}
+.footer-sectioni i{
+  font-size: 25px;
+  color: white; /* or your theme color */
+}
+.social-icons a {
+  color: wheat;
+  font-size: 1.3rem;
+  margin-right: 12px;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ffb703;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 25px;
+  border-top: 1px solid #555;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}

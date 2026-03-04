@@ -1,0 +1,41 @@
+.menu-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.menu-list li {
+  background-color: rgba(204, 159, 53, 0.9);
+  padding: 10px 16px;
+  border-radius: 8px;
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-list li:hover {
+  background-color: black;     /* hover background */
+  transform: scale(1.03);
+}
+
+.menu-list li:hover a {
+  color: rgba(204, 159, 53, 0.9);                /* hover text color */
+}
+
+.menu-list li a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+  font-size: 18px;
+}
