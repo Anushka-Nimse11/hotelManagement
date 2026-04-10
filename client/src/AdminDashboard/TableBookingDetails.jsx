@@ -6,7 +6,7 @@ function TableBookingDetails() {
 
   useEffect(() => {
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/TableBookingDetails")
+      .get("http://localhost:5000/TableBookingDetails")
       .then((res) => {
         const dataWithDefaultStatus = res.data.map((b) => ({
           ...b,
@@ -19,12 +19,9 @@ function TableBookingDetails() {
 
   const updateStatus = (id, status) => {
     axios
-      .put(
-        `https://hotel-backend-a9o4.onrender.com/updateBookingStatus/${id}`,
-        {
-          status,
-        },
-      )
+      .put(`http://localhost:5000/updateBookingStatus/${id}`, {
+        status,
+      })
       .then(() => {
         setBookings((prev) =>
           prev.map((b) => (b.tId === id ? { ...b, Status: status } : b)),

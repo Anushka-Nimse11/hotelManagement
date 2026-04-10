@@ -34,7 +34,7 @@ function DashboardOverview() {
   useEffect(() => {
     // Dashboard counts
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/dashboardCounts")
+      .get("http://localhost:5000/dashboardCounts")
       .then((res) => {
         const data = res.data;
         const cancellationRate =
@@ -47,19 +47,19 @@ function DashboardOverview() {
 
     // Bookings trend (last 7 days)
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/bookingsTrend") // backend should provide last 7 days data
+      .get("http://localhost:5000/bookingsTrend") // backend should provide last 7 days data
       .then((res) => setBookingsTrend(res.data))
       .catch((err) => console.log(err));
 
     // Recent bookings
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/recentBookings") // backend: last 5 bookings
+      .get("http://localhost:5000/recentBookings") // backend: last 5 bookings
       .then((res) => setRecentBookings(res.data))
       .catch((err) => console.log(err));
 
     // Active bookings today
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/activeToday") // backend: bookings with today's date
+      .get("http://localhost:5000/activeToday") // backend: bookings with today's date
       .then((res) =>
         setCounts((prev) => ({ ...prev, activeToday: res.data.count })),
       )
@@ -67,7 +67,7 @@ function DashboardOverview() {
 
     // New users this month
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/newUsersMonth") // backend: new users this month
+      .get("http://localhost:5000/newUsersMonth") // backend: new users this month
       .then((res) =>
         setCounts((prev) => ({ ...prev, newUsersMonth: res.data.count })),
       )

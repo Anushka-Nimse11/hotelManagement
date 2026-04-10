@@ -24,7 +24,8 @@ function Registration({ close, openLogin }) {
     e.preventDefault();
 
     axios
-      .post("https://hotel-backend-a9o4.onrender.com/registration", reg)
+      // .post("https://hotel-backend-a9o4.onrender.com/registration", reg)
+      .post("http://localhost:5000/registration", reg)
       .then((res) => alert("Registration successfully"))
       .catch((err) => alert(err));
 

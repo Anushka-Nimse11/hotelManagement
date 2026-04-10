@@ -21,7 +21,7 @@ function AddAdminForm() {
     e.preventDefault();
 
     axios
-      .post("https://hotel-backend-a9o4.onrender.com/addAdmin", reg)
+      .post("http://localhost:5000/addAdmin", reg)
       .then(() => {
         alert("Admin added successfully");
         navigate("/adminDashboard/adminManagement");

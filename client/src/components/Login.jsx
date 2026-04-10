@@ -14,7 +14,7 @@ function Login({ close, openRegister }) {
     e.preventDefault();
 
     axios
-      .post("https://hotel-backend-a9o4.onrender.com/login", {
+      .post("http://localhost:5000/login", {
         email,
         password,
       })

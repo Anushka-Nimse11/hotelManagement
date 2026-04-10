@@ -1,100 +1,89 @@
-const express = require('express')
 // const mysql = require('mysql')
 
-const mysql = require('mysql2')
-const cors = require('cors');
+require("dotenv").config();
+
+const express = require("express");
+const mysql = require("mysql2");
+
+const cors = require("cors");
 const moment = require("moment");
 
-const app = express()
+const app = express();
 app.use(cors());
 
 app.use(express.json());
-// const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: "root",
-//     password:'',
-//     database: 'hotelmanagment'
-// });
-
-// // Connect to DB
-// db.connect(err => {
-//   if (err) {
-//     console.log('DB connection error:', err);
-//   } else {
-//     console.log('DB connected successfully');
-//   }
-// });
-
-
-
-
-
 const db = mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "hotelmanagment",
 });
 
 // Connect to DB
-db.connect(err => {
+db.connect((err) => {
   if (err) {
-    console.log('DB connection error:', err);
+    console.log("DB connection error:", err);
   } else {
-    console.log('Connected to Railway MySQL ✅');
+    console.log("DB connected successfully");
   }
 });
 
+// const db = mysql.createConnection({
+//   host: process.env.MYSQLHOST,
+//   user: process.env.MYSQLUSER,
+//   password: process.env.MYSQLPASSWORD,
+//   database: process.env.MYSQLDATABASE,
+//   port: process.env.MYSQLPORT,
+// });
 
-app.get('/', (req, res) => {
-  res.send('Backend is running');
+app.get("/", (req, res) => {
+  res.send("Backend is running");
 });
 
 // <-------------------------table booking--------------------------------->
-app.post('/booking', (req, res) => {
-    const sql = "INSERT INTO tablebooking (firstName, middleName, lastName, email, mobileNumber, dateOfBooking, timeOfBooking, numOfGuests, specialRequest) VALUES(?,?,?,?,?,?,?,?,?)";
-    const values = [
-        req.body.firstName,
-        req.body.middleName,
-        req.body.lastName,
-        req.body.email,
-        req.body.mobileNumber,
-        req.body.dateOfBooking,
-        req.body.timeOfBooking,
-        req.body.numOfGuests,
-        req.body.specialRequest
-    ]
+app.post("/booking", (req, res) => {
+  const sql =
+    "INSERT INTO tablebooking (firstName, middleName, lastName, email, mobileNumber, dateOfBooking, timeOfBooking, numOfGuests, specialRequest) VALUES(?,?,?,?,?,?,?,?,?)";
+  const values = [
+    req.body.firstName,
+    req.body.middleName,
+    req.body.lastName,
+    req.body.email,
+    req.body.mobileNumber,
+    req.body.dateOfBooking,
+    req.body.timeOfBooking,
+    req.body.numOfGuests,
+    req.body.specialRequest,
+  ];
 
-    db.query(sql, values, (err, data) => {
-        if(err){
-            console.log(err);
-            return res.json(err);
-        }
-        else{
-            return res.json(data);
-        }
-    })
+  db.query(sql, values, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    } else {
+      return res.json(data);
+    }
+  });
 });
 
 // <-------------------------Retrive details of table booking (Admin)---------------------------->
-app.get('/TableBookingDetails', (req, res) => {
+app.get("/TableBookingDetails", (req, res) => {
   const sql = "SELECT * FROM tablebooking";
 
   db.query(sql, (err, data) => {
     if (err) {
       console.error("Database Error:", err);
-      return res.status(500).json({ error: "Failed to fetch table booking details" });
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch table booking details" });
     }
 
     return res.status(200).json(data);
   });
 });
 
-
-
 // Fetch bookings for a logged-in user
-app.get('/bookings', (req, res) => {
+app.get("/bookings", (req, res) => {
   const email = req.query.email;
   if (!email) {
     return res.status(401).json({ message: "Unauthorized: Email required" });
@@ -110,78 +99,75 @@ app.get('/bookings', (req, res) => {
   });
 });
 
-
 // <---------------------------Registration (user)----------------------------->
-app.post('/registration', (req, res) => {
-    const sql = "INSERT INTO user (Name, Email, Password, UserType, Address, MobileNo) VALUES(?,?,?,'Users',?,?)";
-    const values = [
-        req.body.name,
-        req.body.email,
-        req.body.password,
-        req.body.address,
-        req.body.mobileNo,
-    ]
+app.post("/registration", (req, res) => {
+  const sql =
+    "INSERT INTO user (Name, Email, Password, UserType, Address, MobileNo) VALUES(?,?,?,'Users',?,?)";
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.password,
+    req.body.address,
+    req.body.mobileNo,
+  ];
 
-    db.query(sql, values, (err, data) => {
-        if(err){
-            console.log(err);
-            return res.json(err);
-        }
-        else{
-            return res.json(data);
-        }
-    })
+  db.query(sql, values, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    } else {
+      return res.json(data);
+    }
+  });
 });
 
 // <--------------------------Add Admin--------------------->
-app.post('/addAdmin', (req, res) => {
-    const sql = "INSERT INTO user (Name, Email, Password, UserType, Address, MobileNo) VALUES(?,?,?,'Admin',?,?)";
-    const values = [
-        req.body.name,
-        req.body.email,
-        req.body.password,
-        req.body.address,
-        req.body.mobileNo,
-    ]
+app.post("/addAdmin", (req, res) => {
+  const sql =
+    "INSERT INTO user (Name, Email, Password, UserType, Address, MobileNo) VALUES(?,?,?,'Admin',?,?)";
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.password,
+    req.body.address,
+    req.body.mobileNo,
+  ];
 
-    db.query(sql, values, (err, data) => {
-        if(err){
-            console.log(err);
-            return res.json(err);
-        }
-        else{
-            return res.json(data);
-        }
-    })
+  db.query(sql, values, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json(err);
+    } else {
+      return res.json(data);
+    }
+  });
 });
 
-
 //<--------------------------Retrive details of admin------------------------>
-app.get('/adminDetails', (req, res) => {
+app.get("/adminDetails", (req, res) => {
   const sql = "SELECT * FROM user WHERE UserType='Admin'";
 
   db.query(sql, (err, data) => {
     if (err) {
       console.error("Database Error:", err);
-      return res.status(500).json({ error: "Failed to fetch table booking details" });
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch table booking details" });
     }
 
     return res.status(200).json(data);
   });
 });
 
-
-
-
-
 // <----------------------------Login---------------------------->
-app.post('/login', (req, res) => {
-    const sql = "SELECT UserId, Email, UserType FROM user WHERE Email=? AND Password=?";
+app.post("/login", (req, res) => {
+  const sql =
+    "SELECT UserId, Email, UserType FROM user WHERE Email=? AND Password=?";
   const Values = [req.body.email, req.body.password];
 
   db.query(sql, Values, (err, data) => {
-    if(err){
-     console.log(err);
+    if (err) {
+      console.log(err);
       return res.json({ message: "Server error", error: err });
     }
 
@@ -190,21 +176,18 @@ app.post('/login', (req, res) => {
         message: "Login Successful",
 
         UserId: data[0].UserId,
-        UserType: data[0].UserType
-        
+        UserType: data[0].UserType,
+      });
+    } else {
+      return res.status(401).json({
+        message: "Invalid email or password",
       });
     }
-    else{
-      return res.status(401).json({
-      message: "Invalid email or password"
-    });
-  }
   });
 });
 
-
 // <---------------------- Update Admin ------------------------>
-app.put('/updateAdmin/:id', (req, res) => {
+app.put("/updateAdmin/:id", (req, res) => {
   const sql = `
     UPDATE user 
     SET Name=?, Email=?, Address=?, MobileNo=? 
@@ -228,10 +211,8 @@ app.put('/updateAdmin/:id', (req, res) => {
   });
 });
 
-
-
 // <-------------------- Deactivate Admin -------------------->
-app.put('/deactivateAdmin/:id', (req, res) => {
+app.put("/deactivateAdmin/:id", (req, res) => {
   const sql = `
     UPDATE user 
     SET Status='Inactive'
@@ -247,9 +228,8 @@ app.put('/deactivateAdmin/:id', (req, res) => {
   });
 });
 
-
 // <-------------------- Reactivate Admin -------------------->
-app.put('/reactivateAdmin/:id', (req, res) => {
+app.put("/reactivateAdmin/:id", (req, res) => {
   const sql = `
     UPDATE user 
     SET Status='Active'
@@ -306,13 +286,12 @@ app.put("/updateBooking/:id", (req, res) => {
         if (err2) return res.status(500).send(err2);
         res.send(rows[0]); // Send updated record
       });
-    }
+    },
   );
 });
 
-
 // <------------------- Delete Table Booking (user)------------------->
-app.delete('/deleteBooking/:id', (req, res) => {
+app.delete("/deleteBooking/:id", (req, res) => {
   const sql = "DELETE FROM tablebooking WHERE tId=?";
 
   db.query(sql, [req.params.id], (err) => {
@@ -322,7 +301,7 @@ app.delete('/deleteBooking/:id', (req, res) => {
 });
 
 // <------------------- Update Booking Status (Admin) ------------------->
-app.put('/updateBookingStatus/:id', (req, res) => {
+app.put("/updateBookingStatus/:id", (req, res) => {
   const sql = `
     UPDATE tablebooking 
     SET Status=?
@@ -335,16 +314,17 @@ app.put('/updateBookingStatus/:id', (req, res) => {
   });
 });
 
-
-
 // <------------- Dashboard Counts ---------------->
 app.get("/dashboardCounts", (req, res) => {
   const queries = {
     totalUsers: "SELECT COUNT(*) AS count FROM user WHERE UserType='Users'",
     totalBookings: "SELECT COUNT(*) AS count FROM tablebooking",
-    confirmed: "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Confirmed'",
-    pending: "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Pending'",
-    cancelled: "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Cancelled'"
+    confirmed:
+      "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Confirmed'",
+    pending:
+      "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Pending'",
+    cancelled:
+      "SELECT COUNT(*) AS count FROM tablebooking WHERE Status='Cancelled'",
   };
 
   const results = {};
@@ -353,32 +333,29 @@ app.get("/dashboardCounts", (req, res) => {
     if (err) return res.status(500).json(err);
     results.totalUsers = data[0].count;
 
-     db.query(queries.totalBookings, (err, data) => {
+    db.query(queries.totalBookings, (err, data) => {
       if (err) return res.status(500).json(err);
       results.totalBookings = data[0].count;
 
-    db.query(queries.confirmed, (err, data) => {
-      if (err) return res.status(500).json(err);
-      results.confirmed = data[0].count;
-
-      db.query(queries.pending, (err, data) => {
+      db.query(queries.confirmed, (err, data) => {
         if (err) return res.status(500).json(err);
-        results.pending = data[0].count;
+        results.confirmed = data[0].count;
 
-        db.query(queries.cancelled, (err, data) => {
+        db.query(queries.pending, (err, data) => {
           if (err) return res.status(500).json(err);
-          results.cancelled = data[0].count;
+          results.pending = data[0].count;
 
-          res.json(results);
-        });
+          db.query(queries.cancelled, (err, data) => {
+            if (err) return res.status(500).json(err);
+            results.cancelled = data[0].count;
+
+            res.json(results);
+          });
         });
       });
     });
   });
 });
-
-
-
 
 // ----------------- Bookings Trend (Last 7 days) -----------------
 app.get("/bookingsTrend", (req, res) => {
@@ -391,7 +368,8 @@ app.get("/bookingsTrend", (req, res) => {
   let completed = 0;
 
   dates.forEach((date) => {
-    const sql = "SELECT COUNT(*) AS count FROM tablebooking WHERE dateOfBooking = ?";
+    const sql =
+      "SELECT COUNT(*) AS count FROM tablebooking WHERE dateOfBooking = ?";
     db.query(sql, [date], (err, data) => {
       if (err) return res.status(500).json(err);
 
@@ -417,7 +395,8 @@ app.get("/recentBookings", (req, res) => {
 // ----------------- Active Bookings Today -----------------
 app.get("/activeToday", (req, res) => {
   const today = moment().format("YYYY-MM-DD");
-  const sql = "SELECT COUNT(*) AS count FROM tablebooking WHERE dateOfBooking = ?";
+  const sql =
+    "SELECT COUNT(*) AS count FROM tablebooking WHERE dateOfBooking = ?";
   db.query(sql, [today], (err, data) => {
     if (err) return res.status(500).json(err);
     res.json({ count: data[0].count });
@@ -427,14 +406,13 @@ app.get("/activeToday", (req, res) => {
 // ----------------- New Users This Month -----------------
 app.get("/newUsersMonth", (req, res) => {
   const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
-  const sql = "SELECT COUNT(*) AS count FROM user WHERE UserType='Users' AND createdAt >= ?";
+  const sql =
+    "SELECT COUNT(*) AS count FROM user WHERE UserType='Users' AND createdAt >= ?";
   db.query(sql, [startOfMonth], (err, data) => {
     if (err) return res.status(500).json(err);
     res.json({ count: data[0].count });
   });
 });
-
-
 
 // // <------------------------------Add Menu Item--------------------------->
 // app.post('/addMenu', (req, res) => {
@@ -456,8 +434,6 @@ app.get("/newUsersMonth", (req, res) => {
 //         }
 //     })
 // });
-
-
 
 // app.listen(5000, () =>{
 //     console.log("Server started successfully on port 5000");

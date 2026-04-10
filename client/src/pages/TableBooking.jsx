@@ -25,7 +25,7 @@
 //   let handleSubmit = (event) => {
 //     event.preventDefault();
 //     axios
-//       .post("https://hotel-backend-a9o4.onrender.com/booking", table)
+//       .post("http://localhost:5000/bookings/booking", table)
 //       .then((res) => alert("Table book successfully"))
 //       .catch((err) => alert(err));
 
@@ -232,7 +232,7 @@ function TableBooking() {
     }
 
     axios
-      .post("https://hotel-backend-a9o4.onrender.com/booking", table)
+      .post("http://localhost:5000/booking", table)
       .then(() => {
         alert("Table booked successfully ✅");
         window.dispatchEvent(new Event("bookingAdded"));

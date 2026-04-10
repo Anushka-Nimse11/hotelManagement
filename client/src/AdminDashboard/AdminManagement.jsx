@@ -10,7 +10,7 @@ function AdminManagement() {
     if (!window.confirm("Mark this admin as inactive?")) return;
 
     axios
-      .put(`https://hotel-backend-a9o4.onrender.com/deactivateAdmin/${id}`)
+      .put(`http://localhost:5000/deactivateAdmin/${id}`)
       .then(() => fetchAdmins())
       .catch((err) => console.log(err));
   };
@@ -19,14 +19,14 @@ function AdminManagement() {
     if (!window.confirm("Reactivate this admin?")) return;
 
     axios
-      .put(`https://hotel-backend-a9o4.onrender.com/reactivateAdmin/${id}`)
+      .put(`http://localhost:5000/reactivateAdmin/${id}`)
       .then(() => fetchAdmins())
       .catch((err) => console.log(err));
   };
 
   const fetchAdmins = () => {
     axios
-      .get("https://hotel-backend-a9o4.onrender.com/adminDetails")
+      .get("http://localhost:5000/adminDetails")
       .then((res) => setAdmins(res.data))
       .catch((err) => console.log(err));
   };

@@ -5,6 +5,8 @@ import Login from "./Login";
 import Registration from "./Registration";
 
 function Navbar() {
+  const userEmail = sessionStorage.getItem("userEmail");
+
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,6 +39,12 @@ function Navbar() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    alert("Logged out successfully");
+    navigate("/");
+  };
+
   return (
     <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="hotel-name" onClick={() => navigate("/")}>
@@ -59,8 +67,16 @@ function Navbar() {
             <NavLink to="/visit">Visit</NavLink>
           </li>
 
-          <li>
+          {/* <li>
             <button onClick={() => setPopupType("login")}>Login</button>
+          </li> */}
+
+          <li>
+            {userEmail ? (
+              <button onClick={handleLogout}>Logout</button>
+            ) : (
+              <button onClick={() => setPopupType("login")}>Login</button>
+            )}
           </li>
         </ul>
       </div>
